@@ -13,7 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price', 'created_at', 'updated_at']
-    list_filter = ['is_active','in_stock', 'created_at', 'updated_at']
+    list_filter = ['is_active', 'in_stock', 'created_at', 'updated_at']
     list_editable = ['price']
     prepopulated_fields = {'slug': ('name',)}
     '''
@@ -26,10 +26,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(models.Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_filter = ( 'created', 'updated')
+    list_filter = ('created', 'updated')
     list_display = ('user', 'product', 'created')
     search_fields = ('name', 'content')
-
 
 
 @admin.register(models.Images)
