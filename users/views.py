@@ -1,6 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 
 from .forms import LoginForm, UserRegistrationForm
@@ -23,13 +23,11 @@ def user_login(request):
                 if user.is_active:
                     login(request, user)
                     messages.success(request, 'Login Successfully!')
-                    return HttpResponse('Authenticate successfully')
+                    return redirect('/')
                 else:
                     messages.error(request, 'Login Failed!')
-                    return HttpResponse('Disable account')
             else:
                 messages.error(request, ' Try again!')
-                return HttpResponse('Invalid login')
     else:
         form = LoginForm()
     return render(request, 'users/login.html', {'form': form})
@@ -48,7 +46,14 @@ def register_page(request):
             '''
             new_user.save()
             Profile.objects.create(user=new_user)
-            return render(request, 'users/login.html', {'user_form': new_user})
+            return render(request, 'users/register_done.html', {'user_form': new_user})
     else:
         user_form = UserRegistrationForm()
     return render(request, 'users/register.html', {'user_form': user_form})
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login/')
+
+
