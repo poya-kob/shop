@@ -1,4 +1,8 @@
 from django.shortcuts import render, get_object_or_404
+
+
+from rest_framework import generics
+
 from django.views.generic import CreateView
 
 from django.views import View
@@ -24,3 +28,9 @@ class ProductDetail(View):
             "product_detail": product_detail_qs,
         }
         return render(request, "products_temp/product_detail.html", context)
+
+
+
+
+
+

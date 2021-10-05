@@ -10,7 +10,7 @@
 					<div class="product-details"><!--product-details-->
 						<div class="col-sm-5">
 							<div class="view-product">
-								<img src="{% static "images/product-details/1.jpg" %}" alt="" />
+								<img src="{{ product_detail.image.url }}" alt="" />
 								<h3>بزرگنمایـی</h3>
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -49,12 +49,12 @@
 							<div class="product-information"><!--/product-information-->
 								<img src="{% static "images/product-details/new.png" %}" class="newarrival" alt="" />
 								<div>
-									<h2>کـالای شمـاره 010</h2>
-									<p>شناسـه : 0110110</p>
+									<h2>{{ product_detail.category }}</h2>
+									<p>{{ product_detail.name }}</p>
 								</div>
 								<div>
 									<span>
-										<span>قیمت : 2.350.000 ريال</span>
+										<span>قیمت :   {{ product_detail.price }}</span>
 									</span>
 									<span>
 										<label>تعداد :</label>
