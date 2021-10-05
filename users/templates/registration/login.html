@@ -8,12 +8,21 @@
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
                     <div class="login-form"><!--login form-->
-                        <h2>ورود به حساب کاربـری :</h2>
+                        <h2>ورود به حساب کاربـری &#128525:</h2>
+                        {%  if form.errors %}
+                            <div dir="auto">
+                            نام کاربری یا رمرز عبور صحیح نمی باشد.
+                            لطفا مجدد تلاش کنید.
+                            </div>
+                        {% endif %}
+                    <p>
+                        اگر حساب کاربری ندارید ازاینجا برای ایجاد حساب خود وارد شوید :
+                        <a href="{% url 'register' %}"> ثبت نام حساب کاربری &#128151</a></p>
+
                         <form method="post" action="{% url 'login' %}">
                             {% csrf_token %}
-                            {{ form.as_p }}
-{#                            {{ form.username }}#}
-{#                            {{ form.password }}#}
+                            {{ form.username }}
+                            {{ form.password }}
                             <input type="hidden" name="next" value="{{ next }}" />
                             <span>
 								<input type="checkbox" class="checkbox">

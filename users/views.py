@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
 
 
@@ -30,7 +31,7 @@ def user_login(request):
                 messages.error(request, ' Try again!')
     else:
         form = LoginForm()
-    return render(request, 'users/login.html', {'form': form})
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def register_page(request):
@@ -57,3 +58,29 @@ def logout_page(request):
     return redirect('/login/')
 
 
+@login_required()
+def dashboard(request):
+    render(request, 'users/dashboard.html', {'section': 'dashboard'})
+
+
+@login_required()
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile,
+                                       data=request.POST,
+                                       files=request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            # messages.add_message(request, messages.SUCCESS, 'Your Profile Updated Successfully!')
+            messages.success(request, 'Your Profile Updated Successfully!')
+        else:
+            messages.error(request, 'Profile Updating Failed!')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'users/edit.html',
+                  {'user_form': user_form, 'profile_form': profile_form})

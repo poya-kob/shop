@@ -12,8 +12,12 @@
                     <div class="signup-form"><!--sign up form-->
                         <h2>ثبت نام کاربـر جدیـد</h2>
                         <form method="post" action="{% url 'register' %}">
-                            {#                            {{ user_form.username}}#}
-                            {{ user_form }}
+                              {{ user_form.as_p}}
+{#                            {{ user_form.username }}#}
+{#                            {{ user_form.first_name }}#}
+{#                            {{ user_form.email }}#}
+{#                            {{ user_form.password }}#}
+{#                            {{ user_form.password2 }}#}
                             {% csrf_token %}
                             <button type="submit" value="Creat my account">ثبت نام</button>
                         </form>
