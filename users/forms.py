@@ -11,7 +11,14 @@ class LoginForm(forms.Form):
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'placeholder': "رمز عبور"}))
-    password2 = forms.CharField(label='repeat_password', widget=forms.PasswordInput(attrs={'placeholder': " تکرار رمز عبور"}))
+    password2 = forms.CharField(label='repeat_password',
+                                widget=forms.PasswordInput(attrs={'placeholder': " تکرار رمز عبور"}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'نام کاربری'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'نام'
+        self.fields['email'].widget.attrs['placeholder'] = 'ایمیل'
 
     class Meta:
         model = User
@@ -34,4 +41,3 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'phone')
-

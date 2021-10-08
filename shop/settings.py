@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users.apps.UserConfig',
+    'cart.apps.CartConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -190,3 +191,5 @@ AUTHENTICATION_BACKENDS =[
     'users.authentication.EmailAuthBackend',
 
 ]
+
+CART_SESSION_ID = 'cart'

@@ -117,6 +117,16 @@
 												<h2>1.250.000 ريال</h2>
 												<p>توضیحات کوتاه محصول</p>
 												<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>
+{#												<button type="button" class="{% url "cart:cart_add" product.id %}"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>#}
+{#                                                ####################################}
+{#                                                     <p class="price">${{ product.price }}</p>#}
+{#                                                    <form action="{% url "cart:cart_add" product.id %}" method="post">#}
+{#                                                        {{ cart_product_form }}#}
+{#                                                        {% csrf_token %}#}
+{#                                                        <input type="submit" value="Add to cart">#}
+{#                                                    </form>#}
+{#                                                    {{ product.description|linebreaks }}#}
+{#                                                ##################################################}
 											</div>
 										</div>
 									</div>

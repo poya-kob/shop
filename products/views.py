@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView
-
 from django.views import View
+from cart.forms import CartAddProductForm
 
-from .models import Product, Images, Comment
+from .models import Product
 
 
 class ProductList(View):
@@ -24,3 +24,10 @@ class ProductDetail(View):
             "product_detail": product_detail_qs,
         }
         return render(request, "products_temp/product_detail.html", context)
+
+    def product_detail(request, id, slug):
+        product = get_object_or_404(Product, id=id, slug=slug, available=True)
+
+        cart_product_form = CartAddProductForm()
+        return render(request,'cart/detail.html',
+                      {'product': product,'cart_product_form': cart_product_form})
