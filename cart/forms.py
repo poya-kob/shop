@@ -10,3 +10,14 @@ class CartAddProductForm(forms.Form):
     override = forms.BooleanField(required=False,
                                   initial=False,
                                   widget=forms.HiddenInput)
+
+
+# class UserNewOrderForm(forms.Form):
+#     product_id = forms.ImageField(
+#         widget=forms.HiddenInput(),
+#     )
+#
+#     count = forms.ImageField(
+#         widget=forms.NumberInput(),
+#         initial=1
+#     )
