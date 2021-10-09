@@ -11,14 +11,16 @@
                         <h2>ورود به حساب کاربـری :</h2>
                         <form method="post" action="{% url 'login' %}">
                             {% csrf_token %}
-                            {{ form.username }}
-                            {{ form.password }}
+                            {{ form.as_p }}
+{#                            {{ form.username }}#}
+{#                            {{ form.password }}#}
+                            <input type="hidden" name="next" value="{{ next }}" />
                             <span>
 								<input type="checkbox" class="checkbox">
 								مرا بخاطـر بسپـار
 							</span>
                             <span>
-								<a href="forget-password.html">رمـز عبـور خود را فراموش کرده ام</a>
+								<a href="{% url 'password_reset' %}">رمـز عبـور خود را فراموش کرده ام</a>
 							</span>
                             <button type="submit" class="btn btn-default">ورود</button>
                         </form>
