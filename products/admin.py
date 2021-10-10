@@ -1,16 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
-from . import models
+from .models import Comment, Category, Product, ProductGallery, Images
 
 
-@admin.register(models.Category)
+@admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
 
-@admin.register(models.Product)
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'price', 'created_at', 'updated_at']
     list_filter = ['is_active', 'in_stock', 'created_at', 'updated_at']
@@ -24,13 +23,19 @@ class ProductAdmin(admin.ModelAdmin):
     date_hierarchy = 'updated_at'
 
 
-@admin.register(models.Comment)
+@admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_filter = ('created', 'updated')
     list_display = ('user', 'product', 'created')
     search_fields = ('name', 'content')
 
 
-@admin.register(models.Images)
+@admin.register(Images)
 class ImagesAdmin(admin.ModelAdmin):
     pass
+
+
+# @admin.register(models.ProductGallery)
+# class ProductGalleryAdmin(admin.ModelAdmin):
+#     pass
+admin.site.register(ProductGallery)

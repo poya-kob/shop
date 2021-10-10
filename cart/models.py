@@ -22,6 +22,16 @@ class CartItems(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     status = models.CharField(choices=STATUS_CHOICES, max_length=10, default="pending")
     is_selected = models.BooleanField(default=False)
+    price = models.IntegerField()
 
     def __str__(self):
         return self.product.name
+
+    def save(self, *args, **kwargs):
+        if self.product.inventory < self.quantity:
+            raise Exception("ein tedad nadarim")
+        super().save(*args, **kwargs)
+
+    @property
+    def get_cost(self):
+        return self.price * self.quantity
