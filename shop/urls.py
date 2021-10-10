@@ -8,7 +8,7 @@ from .views import home_page
 urlpatterns = [
     path('', home_page),
     path('', include('users.urls')),
-    path('cart', include('cart.urls' , namespace='cart')),
+    path('cart', include('cart.urls')),
     path('products/', include('products.urls')),
     path('admin/', admin.site.urls),
     path('api/', include("products.api.api_urls")),

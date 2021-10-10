@@ -5,7 +5,6 @@ from rest_framework import generics
 
 from django.views.generic import CreateView
 from django.views import View
-from cart.forms import CartAddProductForm
 
 from .models import Product
 
@@ -28,18 +27,15 @@ class ProductDetail(View):
             "product_detail": product_detail_qs,
         }
         return render(request, "products_temp/product_detail.html", context)
-
-<<<<<<< HEAD
-    def product_detail(request, id, slug):
-        product = get_object_or_404(Product, id=id, slug=slug, available=True)
-
-        cart_product_form = CartAddProductForm()
-        return render(request,'cart/detail.html',
-                      {'product': product,'cart_product_form': cart_product_form})
-=======
-
+    #
+    # def product_detail(request, id, slug):
+    #     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    #
+    #     cart_product_form = CartAddProductForm()
+    #     return render(request,'cart/detail.html',
+    #                   {'product': product,'cart_product_form': cart_product_form})
+    #
 
 
 
 
->>>>>>> 50ee7f8f0938234a8d21bee387bab79d39a1c58f
