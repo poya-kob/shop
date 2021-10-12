@@ -2,48 +2,41 @@
 {% load static %}
 {% block content %}
 
+
     <section>
         <div class="container">
             <div class="row">
 
-<<<<<<< HEAD
                 <div class="col-sm-9 padding-right">
                     <div class="product-details"><!--product-details-->
                         <div class="col-sm-5">
                             <div class="view-product">
-                                <img src="{% static "images/product-details/1.jpg" %}" alt=""/>
+                                <img src="{{ product_detail.image.url }}" alt=""/>
                                 <h3>بزرگنمایـی</h3>
                             </div>
                             <div id="similar-product" class="carousel slide" data-ride="carousel">
-=======
-				<div class="col-sm-9 padding-right">
-					<div class="product-details"><!--product-details-->
-						<div class="col-sm-5">
-							<div class="view-product">
-								<img src="{{ product_detail.image.url }}" alt="" />
-								<h3>بزرگنمایـی</h3>
-							</div>
-							<div id="similar-product" class="carousel slide" data-ride="carousel">
->>>>>>> 50ee7f8f0938234a8d21bee387bab79d39a1c58f
 
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner">
-                                    <div class="item active">
-                                        <a href=""><img src="{% static "images/product-details/similar1.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar2.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar3.jpg" %}" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><img src="{% static "images/product-details/similar1.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar2.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar3.jpg" %}" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href=""><img src="{% static "images/product-details/similar1.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar2.jpg" %}" alt=""></a>
-                                        <a href=""><img src="{% static "images/product-details/similar3.jpg" %}" alt=""></a>
-                                    </div>
+                                    {% for gallery_list in galleries %}
+                                    <div class="item {{ forloop.first|yesno:"active,"}}">
+                                        {% for image in gallery_list %}
+                                        <a href=""><img src="{{image.image.url}}" alt="{{ image.title }}" style="width: 80px;height:80px"></a>
 
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+{#                                    <div class="item">#}
+{#                                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
+{#                                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
+{#                                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
+{#                                    </div>#}
+{#                                    <div class="item">#}
+{#                                        <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>#}
+{#                                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>#}
+{#                                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>#}
+{#                                    </div>#}
+{##}
                                 </div>
 
                                 <!-- Controls -->
@@ -55,29 +48,19 @@
                                 </a>
                             </div>
 
-<<<<<<< HEAD
                         </div>
                         <div class="col-sm-7">
                             <div class="product-information"><!--/product-information-->
-                                <img src="{% static "images/product-details/new.png" %}" class="newarrival" alt=""/>
                                 <div>
                                     <h2>کـالای شمـاره 010</h2>
                                     <p>شناسـه : 0110110</p>
+                                     <h2>{{ product_detail.category }}</h2>
+                                     <p>{{ product_detail.name }}</p>
+
                                 </div>
                                 <div>
-=======
-						</div>
-						<div class="col-sm-7">
-							<div class="product-information"><!--/product-information-->
-								<img src="{% static "images/product-details/new.png" %}" class="newarrival" alt="" />
-								<div>
-									<h2>{{ product_detail.category }}</h2>
-									<p>{{ product_detail.name }}</p>
-								</div>
-								<div>
->>>>>>> 50ee7f8f0938234a8d21bee387bab79d39a1c58f
 									<span>
-										<span>قیمت :   {{ product_detail.price }}</span>
+										<span>قیمت : 2.350.000 ريال</span>
 									</span>
                                     <span>
 										<label>تعداد :</label>
@@ -142,16 +125,6 @@
                                                 <button type="button" class="btn btn-default add-to-cart"><i
                                                         class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد
                                                 </button>
-                                                {#												<button type="button" class="{% url "cart:cart_add" product.id %}"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</button>#}
-                                                {#                                                ####################################}
-                                                {#                                                     <p class="price">${{ product.price }}</p>#}
-                                                {#                                                    <form action="{% url "cart:cart_add" product.id %}" method="post">#}
-                                                {#                                                        {{ cart_product_form }}#}
-                                                {#                                                        {% csrf_token %}#}
-                                                {#                                                        <input type="submit" value="Add to cart">#}
-                                                {#                                                    </form>#}
-                                                {#                                                    {{ product.description|linebreaks }}#}
-                                                {#                                                ##################################################}
                                             </div>
                                         </div>
                                     </div>

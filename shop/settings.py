@@ -31,21 +31,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
 INSTALLED_APPS = [
     'users.apps.UserConfig',
-    'cart.apps.CartConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-    'rest_framework_simplejwt',
-
-    # local
+    'cart',
+    'payment',
     'products',
 
 ]
@@ -195,4 +191,3 @@ AUTHENTICATION_BACKENDS =[
 
 ]
 
-CART_SESSION_ID = 'cart'

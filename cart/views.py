@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views.decorators.http import require_POST
 from products.models import Product
@@ -35,4 +35,3 @@ def cart_detail(request):
             'quantity': item['quantity'],
             'override': True})
     return render(request, 'cart/detail.html', {'cart': cart})
-
