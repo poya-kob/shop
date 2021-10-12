@@ -13,6 +13,14 @@
 </head>
 <body>
 
+{%  if request.user.is_authenticated %}
+<ul class="menu">
+    <li {% if section == 'dashboard' %} class="selected"{% endif %}><a href="{% url 'dashboard' %}"> My Dashboard</a>
+    </li>
+</ul>
+{% endif %}
+
+
 {% include 'shared/Header.html' %}
 {% block content %}
 

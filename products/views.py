@@ -2,14 +2,14 @@ import itertools
 
 from django.shortcuts import render, get_object_or_404
 
-from rest_framework import generics
-
-from django.views.generic import CreateView
-
 from django.views.generic import ListView, DetailView
-from django.views import View
 
-from .models import Product, Images, Comment, ProductGallery
+from django.views import View
+from cart.forms import CartAddProductForm
+
+from .models import Product, Comment, ProductGallery
+
+from .models import Product
 
 
 class ProductList(ListView):
@@ -34,3 +34,10 @@ class ProductDetail(View):
 
         }
         return render(request, "products_temp/product_detail.html", context)
+
+    def product_detail(request, id, slug):
+        product = get_object_or_404(Product, id=id, slug=slug, available=True)
+
+        cart_product_form = CartAddProductForm()
+        return render(request, 'cart/detail.html',
+                      {'product': product, 'cart_product_form': cart_product_form})

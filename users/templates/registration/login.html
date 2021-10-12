@@ -1,0 +1,47 @@
+{% extends 'shared/_MainLayout.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <section id="form"><!--form-->
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <div class="login-form"><!--login form-->
+                        <h2>ورود به حساب کاربـری &#128525:</h2>
+                        {%  if form.errors %}
+                            <div dir="auto">
+                            نام کاربری یا رمرز عبور صحیح نمی باشد.
+                            لطفا مجدد تلاش کنید.
+                            </div>
+                        {% endif %}
+                    <p>
+                        اگر حساب کاربری ندارید ازاینجا برای ایجاد حساب خود وارد شوید :
+                        <a href="{% url 'register' %}"> ثبت نام حساب کاربری &#128151</a></p>
+
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            {{ form.username }}
+                            {{ form.password }}
+                            <input type="hidden" name="next" value="{{ next }}" />
+                            <span>
+								<input type="checkbox" class="checkbox">
+								مرا بخاطـر بسپـار
+							</span>
+                            <span>
+								<a href="{% url 'password_reset' %}">رمـز عبـور خود را فراموش کرده ام</a>
+							</span>
+                            <button type="submit" class="btn btn-default">ورود</button>
+                        </form>
+                    </div><!--/login form-->
+                </div>
+                <div class="col-sm-1">
+                    <h2 class="or">یا</h2>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <!--/form-->
+
+{% endblock %}

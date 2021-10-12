@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Comment, Category, Product, ProductGallery, Images
+from .models import Comment, Category, Product, ProductGallery
 
 
 @admin.register(Category)
@@ -28,11 +28,6 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('created', 'updated')
     list_display = ('user', 'product', 'created')
     search_fields = ('name', 'content')
-
-
-@admin.register(Images)
-class ImagesAdmin(admin.ModelAdmin):
-    pass
 
 
 # @admin.register(models.ProductGallery)
