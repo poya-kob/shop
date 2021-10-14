@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'cart',
     'payment',
     'products',
+    'sliders',
+
+
 
 ]
 
@@ -181,13 +184,12 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LOGIN_URL ='login'
-LOGOUT_URL ='logout'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'dashboard'
 
-AUTHENTICATION_BACKENDS =[
+AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'users.authentication.EmailAuthBackend',
 
 ]
-

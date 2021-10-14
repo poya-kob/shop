@@ -18,8 +18,6 @@
 
                         <div class="carousel-inner">
                             {% for slider in sliders %}
-
-
                                 <div class="item {{ forloop.first|yesno:"active," }}">
                                     <div class="col-sm-6">
                                         {% if slider.title %}<h2>{{ slider.title }}</h2>{% else %}
