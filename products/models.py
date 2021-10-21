@@ -56,8 +56,9 @@ class Comment(models.Model):
                                 related_query_name='comment')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', related_query_name='comment')
 
-    created = models.DateField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
+    email = models.EmailField(max_length=100, null=True)
 
     def __str__(self):
         return self.title

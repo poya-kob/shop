@@ -1,9 +1,12 @@
 import itertools
 
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
+from django.views.generic.edit import DeleteView
 from django.views import View
 from cart.forms import CartAddProductForm
 
@@ -15,7 +18,7 @@ from .models import Product
 class ProductList(ListView):
     queryset = Product.objects.filter(is_active=True, in_stock=True)
     template_name = 'products_temp/product_list.html'
-    paginate_by = 2
+    paginate_by = 3
 
 
 def gallery_grouper(n, iterable):
@@ -45,3 +48,34 @@ class ProductDetail(View):
         cart_product_form = CartAddProductForm()
         return render(request, 'cart/detail.html',
                       {'product': product, 'cart_product_form': cart_product_form})
+
+
+@login_required()
+@require_http_methods(["POST"])
+def add_comment_view(request):
+    title = request.POST.get('title')
+    email = request.POST.get('email')
+    pid = request.POST.get('pid')
+    content = request.POST.get('content')
+    Comment.objects.create(title=title, email=email, product_id=pid, content=content, user_id=request.user.id)
+    return redirect(reverse('product_detail', args=pid))
+
+
+@login_required()
+@require_http_methods(["POST"])
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('product_detail', pk=comment.product.pk)
+
+
+class SearchProductsView(ListView):
+    template_name = "products_temp/product_list.html"
+    paginate_by = 3
+
+    def get_queryset(self):
+        request = self.request
+        query = request.GET.get("q")
+        if query is not None:
+            return Product.objects.filter(is_active=True, in_stock=True, name__icontains=query)
+        return Product.objects.get_active_products()

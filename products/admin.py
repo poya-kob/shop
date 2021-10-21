@@ -30,7 +30,4 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('name', 'content')
 
 
-# @admin.register(models.ProductGallery)
-# class ProductGalleryAdmin(admin.ModelAdmin):
-#     pass
 admin.site.register(ProductGallery)
