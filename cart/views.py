@@ -1,21 +1,22 @@
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.views.decorators.http import require_POST
 from products.models import Product
-from .models import Cart, CartItems
+from .models import Cart
 from .forms import CartAddProductForm
 
 
 @require_POST
 def cart_add(request, product_id):
-    count = request.POST.get('count')
-    if not Cart.objects.filter(user_id=request.user.id):
-        Cart.objects.create(user_id=request.user.id)
-    cart = Cart.objects.get(user_id=request.user.id)
+    cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    cart.cart_items.create(product=product, quantity=int(count), price=product.price)
-
-    return redirect(reverse('cart_detail'))
+    form = CartAddProductForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.add(product=product,
+                 quantity=cd['quantity'],
+                 override_quantity=cd['override'])
+    return redirect('cart_detail')
 
 
 @require_POST
@@ -25,21 +26,12 @@ def cart_remove(request, product_id):
     cart.remove(product)
     return redirect('cart_detail')
 
-#
-# def cart_detail(request):
-#     cart = Cart.objects.get(user_id=request.user.id)
-#     # context = {
-#     #     'cart': cart
-#     # }
-#     return render(request, 'cart/detail.html', {'cart': cart})
-
 
 def cart_detail(request):
-    cart, status = Cart.objects.get_or_create(user=request.user)
-    cart_item = CartItems.objects.filter(cart=cart)
-
-    context = {
-        'cart_item': cart_item,
-    }
-
-    return render(request, 'cart/detail.html', context)
+    cart = Cart(request)
+    # return render(request, 'cart/detail.html', {'cart': cart})
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={
+            'quantity': item['quantity'],
+            'override': True})
+    return render(request, 'cart/detail.html', {'cart': cart})
