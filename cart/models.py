@@ -29,7 +29,7 @@ class CartItems(models.Model):
 
     def save(self, *args, **kwargs):
         if self.product.inventory < self.quantity:
-            raise Exception("ein tedad nadarim")
+            raise Exception("in tedad nadarim")
         super().save(*args, **kwargs)
 
     @property
