@@ -65,11 +65,16 @@
 									</span>
                                     <span>
 										<label>تعداد :</label>
-										<input type="text" value="3" class="search_box"/>
-										<button type="button" class="btn btn-fefault cart">
+                                        ######
+                                        <form method="post" action="{% url 'cart_add' product_detail.id %}">
+                                            {% csrf_token %}
+										<input type="text" name="count" value="3" class="search_box"/>
+										<button type="submit" class="btn btn-default cart">
 											<i class="fa fa-shopping-cart"></i>
 											افـزودن به سبـد خریـد
 										</button>
+                                        </form>
+                                        ######
 									</span>
                                 </div>
                                 <div>
