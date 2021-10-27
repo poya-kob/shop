@@ -20,6 +20,11 @@ class ProductList(ListView):
     template_name = 'products_temp/product_list.html'
     paginate_by = 3
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['ali'] = "shologh kar"
+        return context
+
 
 def gallery_grouper(n, iterable):
     args = [iter(iterable)] * n
@@ -30,6 +35,10 @@ class ProductDetail(View):
 
     def get(self, request, pk):
         product_detail_qs = get_object_or_404(Product, id=pk)
+        ###################################################baraye bazdid mahsool
+        Product.visit_count += 1
+        Product.save()
+        #################################################
         related_product = Product.objects.filter(category=product_detail_qs.category).distinct()
         grouped_related_products = gallery_grouper(3, related_product)
         galleries = ProductGallery.objects.filter(product_id=pk)

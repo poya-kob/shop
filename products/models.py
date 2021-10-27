@@ -40,6 +40,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     inventory = models.PositiveIntegerField(default=1)
+    visit_count = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('name',)
