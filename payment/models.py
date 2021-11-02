@@ -6,6 +6,7 @@ from cart.models import CartItems
 
 class Invoice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     order_id = models.CharField(max_length=300)
     payment_id = models.CharField(max_length=300)
     amount = models.IntegerField()
@@ -14,6 +15,7 @@ class Invoice(models.Model):
     idpay_track_id = models.IntegerField(default=0000)
     bank_track_id = models.TextField(default=0000)
     status = models.IntegerField(default=0)
+
     cart_items = models.ManyToManyField(CartItems)
 
     def __str__(self):

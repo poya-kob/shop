@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
+from .tasks import async_send_mail
 
 
 def user_login(request):

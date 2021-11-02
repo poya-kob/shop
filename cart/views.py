@@ -35,3 +35,14 @@ def cart_detail(request):
             'quantity': item['quantity'],
             'override': True})
     return render(request, 'cart/detail.html', {'cart': cart})
+
+
+###########################################################################
+###send price for checkout
+
+#
+# def send_amount_checkout(request):
+#     cart_item = Cart.objects.filter(user_id=request.user.id)
+#     for item in cart_item:
+#         item = amount
+#
