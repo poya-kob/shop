@@ -18,7 +18,7 @@ class Profile(models.Model):
 
 
 class Address(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=300, blank=True, null=True)
 
     class Meta:

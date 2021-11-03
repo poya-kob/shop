@@ -36,8 +36,8 @@ class ProductDetail(View):
     def get(self, request, pk):
         product_detail_qs = get_object_or_404(Product, id=pk)
         ###################################################baraye bazdid mahsool
-        Product.visit_count += 1
-        Product.save()
+        # Product.visit_count += 1
+        # Product.save()
         #################################################
         related_product = Product.objects.filter(category=product_detail_qs.category).distinct()
         grouped_related_products = gallery_grouper(3, related_product)

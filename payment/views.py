@@ -12,26 +12,26 @@ from django.views.decorators.csrf import csrf_exempt
 from decouple import config
 from idpay.api import IDPayAPI
 
-# import requests
-import json
 import uuid
 
 
 def payment_init():
     base_url = config('BASE_URL', default='http://127.0.0.1:8000/', cast=str)
-    api_key = config('IDPAY_API_KEY', default=' 18c5c450-563a-48b5-af03-4f1ad3d89b0c ', cast=str)
+    api_key = config('IDPAY_API_KEY', default='18c5c450-563a-48b5-af03-4f1ad3d89b0c', cast=str)
     sandbox = config('IDPAY_SANDBOX', default=True, cast=bool)
 
     return IDPayAPI(api_key, base_url, sandbox)
 
 
-def gateway(request):
+def payment_start(request):
     if request.method == 'POST':
         cart = Cart.objects.get(user_id=request.user.id)
         order_id = uuid.uuid1()
         amount = 0
+        cart_items_id = []
         for item in cart.cart_items.filter(status="pending"):
-            amount += item.get_cost()
+            amount += item.get_cost
+            cart_items_id.append(item.id)
 
         payer = {
             'name': f'{request.user.first_name} {request.user.last_name}'
@@ -41,7 +41,7 @@ def gateway(request):
 
         record = Invoice(user_id=request.user.id, order_id=order_id, amount=int(amount))
         record.save()
-        record.cart_items = cart.cart_items.filter(status="pending")
+        record.cart_items.add(*cart_items_id)
         record.save()
 
         idpay_payment = payment_init()
@@ -92,8 +92,9 @@ def payment_return(request):
                     payment.status = result['status']
                     payment.bank_track_id = result['payment']['track_id']
                     payment.save()
-                    if result['status'] == 100:
-                        payment.update(status='paid')
+                    # todo: inventory inc , cart item status = paid
+                    # if result['status'] == 100:
+                    #     payment.update(status='paid')
                     return render(request, 'payment_temp/error.html', {'txt': result['message'],
                                                                        'payment': payment,
 

@@ -1,4 +1,3 @@
-
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -9,6 +8,6 @@ from users.models import Profile
 
 
 @receiver(post_save, sender=User)
-def update_profile_signal(sender, instance, created, **kwargs):
+def update_profile_signal(sender, instance: User, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.create(user_id=instance.id)
