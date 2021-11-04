@@ -1,9 +1,12 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from settings.models import SiteSetting
 from .models import ContactUs
 
 from contact.forms import CreateContactForm
+
+from .tasks import summation
 
 
 def contact_page(request):
@@ -23,3 +26,9 @@ def contact_page(request):
         "setting": setting
     }
     return render(request, "contact_us/contact_us_page.html", context)
+
+
+################################################################################
+def test_celery(request):
+    summation.delay(5.5)
+    return HttpResponse("ba celery anjam shod")

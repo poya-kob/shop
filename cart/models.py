@@ -14,8 +14,8 @@ class Cart(models.Model):
 
 class CartItems(models.Model):
     STATUS_CHOICES = (
-        ("paid", "Paid"),
-        ("pending", "Pending"),
+        ("paid", "پرداخت شده"),
+        ("pending", "پرداخت نشده"),
     )
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -30,6 +30,7 @@ class CartItems(models.Model):
     def save(self, *args, **kwargs):
         if self.product.inventory < self.quantity:
             raise Exception("in tedad nadarim")
+        self.price = self.product.price
         super().save(*args, **kwargs)
 
     @property

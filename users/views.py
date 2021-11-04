@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
+from .tasks import async_send_mail
 
 
 def user_login(request):
@@ -46,7 +47,7 @@ def register_page(request):
              برای اینکه میخوایم پسوورد رو هش کنه و همینجوری دخیره نکنه
             '''
             new_user.save()
-            Profile.objects.create(user=new_user)
+            # Profile.objects.create(user=new_user)
             return render(request, 'users/register_done.html', {'user_form': new_user})
     else:
         user_form = UserRegistrationForm()

@@ -2,18 +2,27 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 
 from django.views.decorators.http import require_POST
 from products.models import Product
-from .models import Cart, CartItems
+from .models import Cart
 
 
 @require_POST
 def cart_add(request, product_id):
-    count = request.POST.get('count')
+    count = int(request.POST.get('count'))
     if not Cart.objects.filter(user_id=request.user.id):
         Cart.objects.create(user_id=request.user.id)
     cart = Cart.objects.get(user_id=request.user.id)
     product = get_object_or_404(Product, id=product_id)
-    cart.cart_items.create(product=product, quantity=int(count), price=product.price)
+    cart_item = cart.cart_items.filter(product_id=product_id).first()
+    if cart_item:
+        if product.inventory > (count + cart_item.quantity):
+            cart_item.quantity += count
+            cart_item.save()
+        else:
+            raise Exception("تعداد بیشتر از موجودی")
+    else:
+        cart.cart_items.create(product_id=product_id, quantity=int(count), price=product.price)
     return redirect(reverse('cart_detail'))
+
 
 @require_POST
 def cart_remove(request, product_id):
@@ -29,12 +38,12 @@ def cart_remove(request, product_id):
             cart.save()
     return redirect('cart_detail')
 
+
 def cart_detail(request):
     cart, status = Cart.objects.get_or_create(user=request.user)
-    cart_item = CartItems.objects.filter(cart=cart)
-
     context = {
-        'cart_item': cart_item,
+        'cart_item': cart.cart_items.filter(status='pending'),
+
     }
 
-    return render(request, 'cart/detail.html', context)
+    return render(request, 'cart/checkout.html', context)
