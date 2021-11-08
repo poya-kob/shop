@@ -93,8 +93,13 @@ def payment_return(request):
                     payment.bank_track_id = result['payment']['track_id']
                     payment.save()
                     # todo: inventory inc , cart item status = paid
-                    # if result['status'] == 100:
-                    #     payment.update(status='paid')
+                    if result['status'] == 100:
+                        items = payment.cart_items.all()
+                        items.update(status="paid")
+                        for item in items:
+                            item.product.inventory -= item.quantity
+                            item.product.save()
+
                     return render(request, 'payment_temp/error.html', {'txt': result['message'],
                                                                        'payment': payment,
 
