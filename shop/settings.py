@@ -102,7 +102,7 @@ DATABASES = {
         'USER': 'dejavu',
         'PASSWORD': 'dejavu',
         # 'HOST': 'localhost',
-        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
+        'HOST': os.environ.get('POSTGRES_HOST','localhost'),
         'PORT': '5432',
     }
 }
