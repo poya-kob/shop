@@ -101,13 +101,11 @@ DATABASES = {
         'NAME': 'onlineshop',
         'USER': 'dejavu',
         'PASSWORD': 'dejavu',
-        'HOST': 'localhost',
+        # 'HOST': 'localhost',
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': '5432',
     }
 }
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -145,10 +143,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [(
+            BASE_DIR / 'static/')
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / "static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
