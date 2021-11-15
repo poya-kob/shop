@@ -1,6 +1,5 @@
-
 upstream shop {
-    server django_web_yasaman:1126;
+    server django_web_yassaman:1126;
 }
 
 server {

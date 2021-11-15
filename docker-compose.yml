@@ -1,14 +1,13 @@
-
 version: "3.7"
 
 services:
-  django_web_yasaman:
+  django_web_yassaman:
     build: .
     command: >
       ash -c "python manage.py migrate &&  gunicorn shop.wsgi:application --bind 0.0.0.0:1126"
     volumes:
       - static:/app/static
-      - media:/app/static_cdn/media_root
+      - media:/app/media
       - .:/app/
     env_file:
       - ./.env
@@ -26,12 +25,12 @@ services:
     build: ./nginx
     volumes:
       - static:/app/static
-      - media:/app/static_cdn/media_root
+      - media:/app/media
       - ./nginx/config/:/etc/nginx/conf.d/
     ports:
       - 1126:80
     depends_on:
-      - django_web_yasaman
+      - django_web_yassaman
   redis:
     image: redis:alpine
     volumes:
@@ -49,7 +48,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - django_web_yasaman
+      - django_web_yassaman
       - redis
 volumes:
   postgres_data:

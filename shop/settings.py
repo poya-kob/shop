@@ -13,10 +13,13 @@ import os
 from datetime import timedelta
 import os.path
 from pathlib import Path
+from dotenv import load_dotenv, find_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import django.core.mail.backends.smtp
 
+env_file = Path(find_dotenv(usecwd=True))
+load_dotenv(verbose=True, dotenv_path=env_file)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -102,7 +105,7 @@ DATABASES = {
         'USER': 'dejavu',
         'PASSWORD': 'dejavu',
         # 'HOST': 'localhost',
-        'HOST': os.environ.get('POSTGRES_HOST','localhost'),
+        'HOST': os.environ.get('POSTGRES_HOST'),
         'PORT': '5432',
     }
 }
@@ -143,12 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 if DEBUG:
     STATICFILES_DIRS = [(
             BASE_DIR / 'static/')
     ]
 else:
     STATIC_ROOT = BASE_DIR / "static/"
+# STATIC_ROOT = BASE_DIR / "static/"
 
 
 MEDIA_URL = '/media/'
@@ -219,8 +224,8 @@ AUTHENTICATION_BACKENDS = [
 #########################################################
 
 # CELERY Configuration
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/2'
+CELERY_BROKER_URL = os.environ.get('CELERY_REDIS_URL')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_REDIS_BACKEND')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
